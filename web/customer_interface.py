@@ -15,7 +15,7 @@ from integrations.customer_data_manager import CustomerDataManager
 from models.business_config import BusinessConfig
 from entities.customer import Customer
 # Import the dependency we just created
-from .dependencies import get_current_user
+from .dependencies import get_current_user, RedirectToLoginException
 
 # Create customer app
 customer_app = FastAPI(
@@ -56,11 +56,15 @@ async def customer_portal_home(request: Request):
         "page_title": "Customer Support Portal"
     })
 
+@customer_app.exception_handler(RedirectToLoginException)
+async def redirect_to_login_handler(request: Request, exc: RedirectToLoginException):
+    return RedirectResponse(url=f"/customer/login?redirect={exc.redirect_to}", status_code=302)
+
 # Add these new routes to serve the HTML pages
 @customer_app.get("/login", response_class=HTMLResponse)
-async def login_page(request: Request):
+async def login_page(request: Request, redirect: str = "/"):
     """Serves the login page."""
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse("login.html", {"request": request, "redirect": redirect})
 
 
 @customer_app.get("/signup", response_class=HTMLResponse)

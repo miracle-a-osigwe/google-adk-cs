@@ -22,6 +22,11 @@ JWT_AUDIENCE = "authenticated"
 # "Authorization: Bearer <token>" header in the request.
 bearer_scheme = HTTPBearer(auto_error=False)
 
+
+class RedirectToLoginException(Exception):
+    def __init__(self, redirect_to: str = "/"):
+        self.redirect_to = redirect_to
+
 # --- The Dependency Function ---
 async def get_current_user(
     request: Request,
@@ -89,8 +94,4 @@ async def get_current_user(
         # - Signature has expired.
         # - Invalid signature.
         # - Invalid audience.
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid authentication token: {e}",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        raise RedirectToLoginException(str(request.url))

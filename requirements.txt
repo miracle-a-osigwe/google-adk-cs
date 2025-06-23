@@ -4,6 +4,7 @@ google-generativeai
 pydantic
 fastapi
 uvicorn
+gunicorn
 python-dotenv
 asyncio
 typing-extensions

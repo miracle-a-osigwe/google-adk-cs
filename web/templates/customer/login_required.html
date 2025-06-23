@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Login Required{% endblock %}
+
+{% block content %}
+<main class="flex-grow flex items-center justify-center">
+    <div class="max-w-md w-full text-center bg-white p-8 rounded-lg shadow-md">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+            <i class="fas fa-lock text-blue-600 text-xl"></i>
+        </div>
+        <h2 class="mt-6 text-2xl font-bold text-gray-900">Access Denied</h2>
+        <p class="mt-2 text-gray-600">You must be signed in to view this page. Please sign in to continue.</p>
+        <div class="mt-6">
+            <a href="/customer/login" class="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Go to Sign In Page
+            </a>
+        </div>
+    </div>
+</main>
+{% endblock %}

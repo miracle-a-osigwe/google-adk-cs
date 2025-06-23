@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<main class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-gray-900">Share Your Feedback</h1>
+            <p class="mt-2 text-gray-600">We value your opinion. Help us improve our service.</p>
+        </div>
+
+        <form id="feedbackForm" class="mt-8 space-y-6">
+            <!-- This hidden input is crucial for the JS to work -->
+            <input type="hidden" id="ratingInput" name="rating" value="0" required>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 text-center">How would you rate your experience?</label>
+                <div id="ratingContainer" class="mt-2 flex justify-center space-x-2">
+                    <!-- Stars will be injected here by customer.js -->
+                </div>
+            </div>
+
+            <div>
+                <label for="feedbackCategory" class="block text-sm font-medium text-gray-700">What is your feedback about?</label>
+                <select id="feedbackCategory" name="category" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option>General Service</option>
+                    <option>Website Experience</option>
+                    <option>Support Agent</option>
+                    <option>Product/Feature Suggestion</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="feedbackMessage" class="block text-sm font-medium text-gray-700">Your comments</label>
+                <textarea id="feedbackMessage" name="message" rows="5" required
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          placeholder="Please share any additional details..."></textarea>
+            </div>
+            
+            <div>
+                <button type="submit" class="w-full inline-flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                    Submit Feedback
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

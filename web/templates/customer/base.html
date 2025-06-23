@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Customer Portal{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-blue-600">Customer Portal</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/customer/" class="{% block nav_home %}text-gray-500 hover:text-blue-600{% endblock %} px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="/customer/support" class="{% block nav_support %}text-gray-500 hover:text-blue-600{% endblock %} px-3 py-2 text-sm font-medium">Support</a>
+                        <a href="/customer/chat" class="{% block nav_chat %}text-gray-500 hover:text-blue-600{% endblock %} px-3 py-2 text-sm font-medium">Live Chat</a>
+                        <a href="/customer/tickets" class="{% block nav_tickets %}text-gray-500 hover:text-blue-600{% endblock %} px-3 py-2 text-sm font-medium">My Tickets</a>
+                        <a href="/customer/profile" class="{% block nav_profile %}text-gray-500 hover:text-blue-600{% endblock %} px-3 py-2 text-sm font-medium">My Profile</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 sign-in-button">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p>© 2025 Customer Service Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include auth.js for sign-in button functionality -->
+    <script type="module" src="/static/js/auth.js"></script>
+    <script type="module" src="/static/js/customer.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

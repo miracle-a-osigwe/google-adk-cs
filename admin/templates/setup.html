@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Setup - Customer Service Admin{% endblock %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white shadow rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-6">Business Configuration Setup</h3>
+                
+                <form method="post" action="/admin/setup" class="space-y-6">
+                    <div>
+                        <label for="business_name" class="block text-sm font-medium text-gray-700">Business Name</label>
+                        <input type="text" name="business_name" id="business_name" required
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                               placeholder="Enter your business name">
+                    </div>
+
+                    <div>
+                        <label for="industry" class="block text-sm font-medium text-gray-700">Industry</label>
+                        <select name="industry" id="industry" required
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Select your industry</option>
+                            {% for industry in industries %}
+                            <option value="{{ industry }}">{{ industry.title() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="business_description" class="block text-sm font-medium text-gray-700">Business Description (Optional)</label>
+                        <textarea name="business_description" id="business_description" rows="3"
+                                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  placeholder="Brief description of your business"></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-save mr-2"></i>
+                            Create Configuration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-blue-400"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800">What happens next?</h3>
+                    <div class="mt-2 text-sm text-blue-700">
+                        <p>After creating your business configuration, you'll be able to:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li>Set up integrations with your existing systems</li>
+                            <li>Configure customer data requirements</li>
+                            <li>Customize workflows for your industry</li>
+                            <li>Start using the AI-powered customer service system</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

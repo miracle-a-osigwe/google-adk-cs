@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Customer Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Customer Service Admin</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/admin/" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/admin/analytics" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Analytics</a>
+                        <a href="/admin/integrations" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Integrations</a>
+                        <a href="/admin/knowledge-management" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Knowledge</a>
+                        <a href="/admin/agent-performance" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Agents</a>
+                        <a href="/admin/customers" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Customers</a>
+                        <a href="/admin/settings" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Settings</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500">Admin Portal</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        {% if business_config %}
+        <!-- Business Overview -->
+        <div class="mb-8">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ business_config.business_name }}</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-industry text-blue-500 text-2xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">Industry</p>
+                                    <p class="text-lg font-semibold text-gray-900">{{ business_config.industry.title() }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-plug text-green-500 text-2xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">Integrations</p>
+                                    <p class="text-lg font-semibold text-gray-900">{{ total_providers }} Active</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-users text-purple-500 text-2xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">Active Chats</p>
+                                    <p class="text-lg font-semibold text-gray-900">{{ system_metrics.active_conversations }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-star text-yellow-500 text-2xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">Satisfaction</p>
+                                    <p class="text-lg font-semibold text-gray-900">{{ "%.1f"|format(system_metrics.customer_satisfaction) }}/5.0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-chart-line text-green-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Resolution Rate</dt>
+                                <dd class="text-2xl font-bold text-gray-900">{{ "%.0f"|format(system_metrics.resolution_rate * 100) }}%</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-clock text-blue-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Avg Response Time</dt>
+                                <dd class="text-2xl font-bold text-gray-900">{{ system_metrics.avg_response_time }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-ticket-alt text-purple-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Total Requests</dt>
+                                <dd class="text-2xl font-bold text-gray-900">{{ system_metrics.total_requests }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Provider Status and Recent Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Provider Status -->
+            {% if provider_status %}
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Provider Status</h3>
+                    <div class="space-y-3">
+                        {% for provider_name, status in provider_status.items() %}
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    {% if status.status == 'success' %}
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                    {% else %}
+                                    <i class="fas fa-exclamation-circle text-red-500"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">{{ provider_name.title() }}</p>
+                                    <p class="text-xs text-gray-500">
+                                        {% if status.status == 'success' %}
+                                        {{ status.message }}
+                                        {% else %}
+                                        {{ status.error }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0">
+                                {% if status.status == 'success' %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Connected
+                                </span>
+                                {% else %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    Error
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Recent Activity -->
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Activity</h3>
+                    <div class="space-y-3">
+                        {% for activity in recent_activity %}
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <div class="flex-shrink-0">
+                                {% if activity.type == 'success' %}
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                {% elif activity.type == 'warning' %}
+                                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                {% else %}
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                                {% endif %}
+                            </div>
+                            <div class="ml-3 flex-1">
+                                <p class="text-sm font-medium text-gray-900">{{ activity.event }}</p>
+                                <p class="text-xs text-gray-500">{{ activity.time }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Setup Required -->
+        <div class="text-center py-12">
+            <i class="fas fa-cog text-gray-400 text-6xl mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Welcome to Customer Service Admin</h3>
+            <p class="text-gray-500 mb-6">Get started by setting up your business configuration.</p>
+            <a href="/admin/setup" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <i class="fas fa-rocket mr-2"></i>
+                Start Setup
+            </a>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Portal Home{% endblock %}
+
+{% block nav_home %}text-blue-600 border-b-2 border-blue-600{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">How can we help you today?</h1>
+            <p class="text-xl mb-8 opacity-90">Get instant support or browse our knowledge base</p>
+            
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" 
+                           placeholder="Search for help articles, guides, or ask a question..."
+                           class="w-full px-6 py-4 text-gray-900 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
+                    <button class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Live Chat -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-comments text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Live Chat</h3>
+                <p class="text-gray-600 mb-4">Get instant help from our AI assistant or connect with a human agent</p>
+                <a href="/customer/chat" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Start Chat
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Knowledge Base -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-book text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Knowledge Base</h3>
+                <p class="text-gray-600 mb-4">Browse articles, guides, and tutorials to find answers quickly</p>
+                <a href="/customer/support" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                    Browse Articles
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Submit Ticket -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-ticket-alt text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Submit Ticket</h3>
+                <p class="text-gray-600 mb-4">Create a support ticket for complex issues that need detailed attention</p>
+                <a href="/customer/tickets" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
+                    Create Ticket
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popular Articles -->
+<div class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Popular Help Articles</h2>
+            <p class="text-gray-600">Quick answers to the most common questions</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="border border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">How to Reset Your Password</h3>
+                <p class="text-gray-600 mb-4">Step-by-step guide to reset your account password</p>
+                <a href="/customer/knowledge/account" class="text-blue-600 hover:text-blue-700 font-medium">
+                    Read More <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="border border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">API Integration Guide</h3>
+                <p class="text-gray-600 mb-4">Complete guide to integrating with our API</p>
+                <a href="/customer/knowledge/technical" class="text-blue-600 hover:text-blue-700 font-medium">
+                    Read More <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="border border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Billing and Payments</h3>
+                <p class="text-gray-600 mb-4">Understanding your billing cycle and payment options</p>
+                <a href="/customer/knowledge/billing" class="text-blue-600 hover:text-blue-700 font-medium">
+                    Read More <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Information -->
+<div class="bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Still Need Help?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <i class="fas fa-clock text-blue-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">24/7 Support</h3>
+                    <p class="text-gray-600">Our AI assistant is available around the clock</p>
+                </div>
+                
+                <div class="text-center">
+                    <i class="fas fa-users text-green-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Expert Team</h3>
+                    <p class="text-gray-600">Human specialists available during business hours</p>
+                </div>
+                
+                <div class="text-center">
+                    <i class="fas fa-bolt text-purple-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Fast Response</h3>
+                    <p class="text-gray-600">Average response time under 2 minutes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

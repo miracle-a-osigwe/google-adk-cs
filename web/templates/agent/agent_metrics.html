@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/agent.js" defer></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Agent Dashboard</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/agent/" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/agent/queue" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Queue</a>
+                        <a href="/agent/knowledge" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Knowledge</a>
+                        <a href="/agent/agent-metrics" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Agent Metrics</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center">
+                        <span id="statusIndicator" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <span class="h-2 w-2 mr-1 bg-green-400 rounded-full"></span>
+                            Available
+                        </span>
+                        <select id="agentStatusSelector" class="ml-2 text-sm border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="available">Available</option>
+                            <option value="busy">Busy</option>
+                            <option value="away">Away</option>
+                            <option value="offline">Offline</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">AI Agent Performance Metrics</h1>
+            <p class="text-gray-600">Monitor the performance and efficiency of the AI agent system</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Summary Cards -->
+            <div class="bg-white shadow rounded-lg p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-comments text-blue-500 text-3xl"></i>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Total Conversations</dt>
+                            <dd class="text-2xl font-bold text-gray-900">{{ agent_metrics.reception_agent.total_requests }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Resolution Rate</dt>
+                            <dd class="text-2xl font-bold text-gray-900">{{ "%.0f"|format(agent_metrics.technical_agent.resolution_rate * 100) }}%</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-bolt text-yellow-500 text-3xl"></i>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Avg Response Time</dt>
+                            <dd class="text-2xl font-bold text-gray-900">{{ agent_metrics.knowledge_agent.avg_processing_time }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-users text-purple-500 text-3xl"></i>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Human Escalations</dt>
+                            <dd class="text-2xl font-bold text-gray-900">{{ agent_metrics.escalation_agent.total_escalations }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Performance Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {% for agent_id, agent_info in available_agents.items() %}
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-{{ agent_info.icon }} text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">{{ agent_info.name }}</h3>
+                            <p class="text-sm text-gray-500">{{ agent_info.description }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if agent_id in agent_metrics %}
+                    <div class="grid grid-cols-2 gap-4">
+                        {% for metric_name, metric_value in agent_metrics[agent_id].items() %}
+                        <div class="border rounded p-2">
+                            <p class="text-xs text-gray-500">{{ metric_name|replace('_', ' ')|title }}</p>
+                            <p class="text-lg font-semibold">
+                                {% if metric_value is number and metric_value <= 1 %}
+                                {{ "%.0f"|format(metric_value * 100) }}%
+                                {% else %}
+                                {{ metric_value }}
+                                {% endif %}
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4 text-gray-500">
+                        <p>No metrics available</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Performance Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white shadow rounded-lg p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Agent Usage Distribution</h3>
+                <div class="h-64">
+                    <canvas id="agentUsageChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Resolution Performance</h3>
+                <div class="h-64">
+                    <canvas id="resolutionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agent Usage Chart
+            const agentUsageCtx = document.getElementById('agentUsageChart').getContext('2d');
+            new Chart(agentUsageCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'Triage Agent', 
+                        'Knowledge Agent', 
+                        'Technical Agent', 
+                        'Escalation Agent', 
+                        'Followup Agent', 
+                        'Learning Agent'
+                    ],
+                    datasets: [{
+                        data: [
+                            {{ agent_metrics.reception_agent.total_requests }},
+                            {{ agent_metrics.knowledge_agent.total_searches }},
+                            {{ agent_metrics.technical_agent.total_cases }},
+                            {{ agent_metrics.escalation_agent.total_escalations }},
+                            {{ agent_metrics.technical_agent.total_cases }}, // Using technical cases as proxy for followup
+                            {{ agent_metrics.technical_agent.total_cases }}  // Using technical cases as proxy for learning
+                        ],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(107, 114, 128, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Resolution Performance Chart
+            const resolutionCtx = document.getElementById('resolutionChart').getContext('2d');
+            new Chart(resolutionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Knowledge Base', 'Technical Support', 'Human Escalation'],
+                    datasets: [{
+                        label: 'Resolution Rate',
+                        data: [
+                            {{ "%.0f"|format(agent_metrics.knowledge_agent.hit_rate * 100) }},
+                            {{ "%.0f"|format(agent_metrics.technical_agent.resolution_rate * 100) }},
+                            {{ "%.0f"|format(agent_metrics.escalation_agent.routing_accuracy * 100) }}
+                        ],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(59, 130, 246, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

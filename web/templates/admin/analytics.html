@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Customer Service Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Customer Service Admin</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/admin/" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/admin/analytics" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Analytics</a>
+                        <a href="/admin/integrations" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Integrations</a>
+                        <a href="/admin/knowledge-management" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Knowledge</a>
+                        <a href="/admin/agent-performance" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Agents</a>
+                        <a href="/admin/customers" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Customers</a>
+                        <a href="/admin/settings" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Settings</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500">Admin Portal</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Date Range Selector -->
+        <div class="mb-6">
+            <div class="bg-white shadow rounded-lg p-4">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4 md:mb-0">Analytics Dashboard</h2>
+                    <div class="flex items-center space-x-4">
+                        <label for="dateRange" class="text-sm text-gray-700">Date Range:</label>
+                        <select id="dateRange" class="border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                            <option value="90d">Last 90 Days</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                        <button class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-download mr-1"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-ticket-alt text-blue-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Total Requests</dt>
+                                <dd class="text-2xl font-bold text-gray-900">{{ analytics_data.request_volume.data|sum }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Resolution Rate</dt>
+                                <dd class="text-2xl font-bold text-gray-900">{{ analytics_data.resolution_trends.resolved[-1] }}%</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-clock text-purple-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Avg Response Time</dt>
+                                <dd class="text-2xl font-bold text-gray-900">2.3 min</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-star text-yellow-500 text-3xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Customer Satisfaction</dt>
+                                <dd class="text-2xl font-bold text-gray-900">4.2/5.0</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div id="charts-container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Request Volume Chart -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Request Volume</h3>
+                    <div class="h-64">
+                        <canvas id="requestVolumeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown Chart -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Category Breakdown</h3>
+                    <div class="h-64">
+                        <canvas id="categoryBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Resolution Trends Chart -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Resolution Trends</h3>
+                    <div class="h-64">
+                        <canvas id="resolutionTrendsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Customer Satisfaction Chart -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Customer Satisfaction</h3>
+                    <div class="h-64">
+                        <div class="flex items-center justify-center h-full">
+                            <div class="text-center">
+                                <div class="text-5xl font-bold text-blue-600">4.2</div>
+                                <div class="text-sm text-gray-500 mt-2">Average Rating</div>
+                                <div class="flex items-center justify-center mt-3">
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star-half-alt text-yellow-500"></i>
+                                </div>
+                                <div class="mt-4 flex justify-center space-x-4">
+                                    <div class="text-center">
+                                        <div class="text-lg font-semibold text-green-600">{{ analytics_data.customer_satisfaction.excellent }}%</div>
+                                        <div class="text-xs text-gray-500">Excellent</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-semibold text-blue-600">{{ analytics_data.customer_satisfaction.good }}%</div>
+                                        <div class="text-xs text-gray-500">Good</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-semibold text-yellow-600">{{ analytics_data.customer_satisfaction.fair }}%</div>
+                                        <div class="text-xs text-gray-500">Fair</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-semibold text-red-600">{{ analytics_data.customer_satisfaction.poor }}%</div>
+                                        <div class="text-xs text-gray-500">Poor</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Analytics -->
+        <div class="bg-white shadow rounded-lg p-4 mb-8">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Detailed Analytics</h3>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resolved</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Escalated</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Time</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Satisfaction</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Technical</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ analytics_data.category_breakdown.technical }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">85%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3.2 min</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4.1/5.0</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Billing</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ analytics_data.category_breakdown.billing }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">92%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2.5 min</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4.3/5.0</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Account</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ analytics_data.category_breakdown.account }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">95%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.8 min</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4.5/5.0</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">General</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ analytics_data.category_breakdown.general }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">90%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10%</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2.1 min</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4.0/5.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Request Volume Chart
+            const requestVolumeCtx = document.getElementById('requestVolumeChart').getContext('2d');
+            new Chart(requestVolumeCtx, {
+                type: 'line',
+                data: {
+                    labels: {{ analytics_data.request_volume.labels|tojson }},
+                    datasets: [{
+                        label: 'Request Volume',
+                        data: {{ analytics_data.request_volume.data|tojson }},
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Category Breakdown Chart
+            const categoryBreakdownCtx = document.getElementById('categoryBreakdownChart').getContext('2d');
+            new Chart(categoryBreakdownCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys({{ analytics_data.category_breakdown|tojson }}).map(key => key.charAt(0).toUpperCase() + key.slice(1)),
+                    datasets: [{
+                        data: Object.values({{ analytics_data.category_breakdown|tojson }}),
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(107, 114, 128, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            // Resolution Trends Chart
+            const resolutionTrendsCtx = document.getElementById('resolutionTrendsChart').getContext('2d');
+            new Chart(resolutionTrendsCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ analytics_data.resolution_trends.labels|tojson }},
+                    datasets: [
+                        {
+                            label: 'Resolved',
+                            data: {{ analytics_data.resolution_trends.resolved|tojson }},
+                            backgroundColor: 'rgba(16, 185, 129, 0.8)'
+                        },
+                        {
+                            label: 'Escalated',
+                            data: {{ analytics_data.resolution_trends.escalated|tojson }},
+                            backgroundColor: 'rgba(239, 68, 68, 0.8)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            stacked: true
+                        },
+                        x: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

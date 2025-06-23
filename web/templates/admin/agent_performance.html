@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Performance - Customer Service Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/admin.js" defer></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Customer Service Admin</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/admin/" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/admin/analytics" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Analytics</a>
+                        <a href="/admin/integrations" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Integrations</a>
+                        <a href="/admin/knowledge-management" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Knowledge</a>
+                        <a href="/admin/agent-performance" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Agents</a>
+                        <a href="/admin/customers" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Customers</a>
+                        <a href="/admin/settings" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Settings</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500">Admin Portal</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">AI Agent Performance</h1>
+            <p class="text-gray-600">Monitoring the performance and efficiency of individual AI agents.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <!-- Reception Agent -->
+            <div class="bg-white shadow rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-sitemap text-blue-500 text-2xl mr-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">Reception Agent</h3>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="font-medium">Accuracy:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.reception_agent.accuracy * 100) }}%</span></div>
+                    <div><span class="font-medium">Avg Time:</span> <span class="text-gray-700">{{ agent_metrics.reception_agent.avg_processing_time }}</span></div>
+                    <div><span class="font-medium">Requests Handled:</span> <span class="text-gray-700">{{ agent_metrics.reception_agent.total_requests }}</span></div>
+                    <div><span class="font-medium">Success Rate:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.reception_agent.success_rate * 100) }}%</span></div>
+                </div>
+            </div>
+
+            <!-- Knowledge Agent -->
+            <div class="bg-white shadow rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-book text-green-500 text-2xl mr-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">Knowledge Agent</h3>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="font-medium">KB Hit Rate:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.knowledge_agent.hit_rate * 100) }}%</span></div>
+                    <div><span class="font-medium">Avg Time:</span> <span class="text-gray-700">{{ agent_metrics.knowledge_agent.avg_processing_time }}</span></div>
+                    <div><span class="font-medium">Total Searches:</span> <span class="text-gray-700">{{ agent_metrics.knowledge_agent.total_searches }}</span></div>
+                    <div><span class="font-medium">Relevance Score:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.knowledge_agent.relevance_score * 100) }}%</span></div>
+                </div>
+            </div>
+
+            <!-- Technical Agent -->
+            <div class="bg-white shadow rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-cogs text-purple-500 text-2xl mr-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">Technical Agent</h3>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="font-medium">Resolution Rate:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.technical_agent.resolution_rate * 100) }}%</span></div>
+                    <div><span class="font-medium">Avg Time:</span> <span class="text-gray-700">{{ agent_metrics.technical_agent.avg_processing_time }}</span></div>
+                    <div><span class="font-medium">Total Cases:</span> <span class="text-gray-700">{{ agent_metrics.technical_agent.total_cases }}</span></div>
+                    <div><span class="font-medium">Escalation Rate:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.technical_agent.escalation_rate * 100) }}%</span></div>
+                </div>
+            </div>
+
+            <!-- Escalation Agent -->
+            <div class="bg-white shadow rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-users text-red-500 text-2xl mr-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">Escalation Agent</h3>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="font-medium">Routing Accuracy:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.escalation_agent.routing_accuracy * 100) }}%</span></div>
+                    <div><span class="font-medium">Avg Time:</span> <span class="text-gray-700">{{ agent_metrics.escalation_agent.avg_processing_time }}</span></div>
+                    <div><span class="font-medium">Total Escalations:</span> <span class="text-gray-700">{{ agent_metrics.escalation_agent.total_escalations }}</span></div>
+                    <div><span class="font-medium">Specialist Satisfaction:</span> <span class="text-gray-700">{{ "%.0f"|format(agent_metrics.escalation_agent.specialist_satisfaction * 100) }}%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overall Performance Radar Chart -->
+        <div class="mt-8 bg-white shadow rounded-lg">
+            <div class="p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Overall AI Performance Radar</h3>
+                <div style="height: 400px;">
+                    <canvas id="agentPerformanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>

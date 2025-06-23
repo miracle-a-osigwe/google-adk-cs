@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Customer Service Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Customer Service Admin</h1>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-500">Admin Portal</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="px-4 py-16 sm:p-16 text-center">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
+                </div>
+                <h2 class="mt-6 text-2xl font-bold text-gray-900">An Error Occurred</h2>
+                <p class="mt-2 text-gray-600">We're sorry, but something went wrong while processing your request.</p>
+
+                {% if error %}
+                <div class="mt-6 text-left bg-red-50 p-4 rounded-lg">
+                    <p class="text-sm font-medium text-red-800">Error Details:</p>
+                    <pre class="mt-2 text-xs text-red-700 whitespace-pre-wrap font-mono">{{ error }}</pre>
+                </div>
+                {% endif %}
+
+                <div class="mt-8">
+                    <a href="/admin/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Return to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

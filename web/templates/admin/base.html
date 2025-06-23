@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Customer Service Admin{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Customer Service Admin</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/admin/" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/admin/analytics" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Analytics</a>
+                        <a href="/admin/integrations" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Integrations</a>
+                        <a href="/admin/knowledge-management" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Knowledge</a>
+                        <a href="/admin/agent-performance" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Agents</a>
+                        <a href="/admin/customers" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Customers</a>
+                        <a href="/admin/settings" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Settings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Simple JavaScript for interactivity
+        function toggleProvider(providerName) {
+            fetch(`/admin/integrations/${providerName}/toggle`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        }
+
+        function testProvider(providerName) {
+            const button = document.getElementById(`test-${providerName}`);
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testing...';
+            button.disabled = true;
+
+            fetch(`/admin/integrations/${providerName}/test`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    button.innerHTML = '<i class="fas fa-check text-green-600"></i> Success';
+                    button.className = '...bg-green-100 text-green-800...';
+                } else {
+                    button.innerHTML = '<i class="fas fa-times text-red-600"></i> Failed';
+                    button.className = '...bg-red-100 text-red-800...';
+                }
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-vial"></i> Test';
+                    button.disabled = false;
+                    button.className = '...bg-blue-100 text-blue-800...';
+                }, 3000);
+            })
+            .catch(error => {
+                button.innerHTML = '<i class="fas fa-times text-red-600"></i> Error';
+                button.disabled = false;
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-vial"></i> Test';
+                    button.className = '...bg-blue-100 text-blue-800...';
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>

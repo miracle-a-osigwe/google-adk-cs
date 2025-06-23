@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Integrations - Customer Service Admin{% endblock %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Data Provider Integrations</h2>
+        <p class="text-gray-600">Connect your customer data sources to enable comprehensive customer service.</p>
+    </div>
+
+    <!-- Current Integrations -->
+    {% if business_config.data_providers %}
+    <div class="mb-8">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Configured Providers</h3>
+        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul class="divide-y divide-gray-200">
+                {% for provider in business_config.data_providers %}
+                <li class="px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                {% if provider.enabled %}
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                {% else %}
+                                <i class="fas fa-pause-circle text-yellow-500"></i>
+                                {% endif %}
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                    {{ provider.provider_name.title() }}
+                                    {% if provider.provider_name == business_config.primary_data_provider %}
+                                    <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        Primary
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="text-sm text-gray-500">{{ provider.provider_type.title() }} Provider</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="test-{{ provider.provider_name }}" 
+                                    onclick="testProvider('{{ provider.provider_name }}')"
+                                    class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-blue-800 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-vial mr-1"></i>
+                                Test
+                            </button>
+                            <button onclick="toggleProvider('{{ provider.provider_name }}')"
+                                    class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm {% if provider.enabled %}text-yellow-800 bg-yellow-100 hover:bg-yellow-200{% else %}text-green-800 bg-green-100 hover:bg-green-200{% endif %} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                {% if provider.enabled %}
+                                <i class="fas fa-pause mr-1"></i>
+                                Disable
+                                {% else %}
+                                <i class="fas fa-play mr-1"></i>
+                                Enable
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Add New Integration -->
+    <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-6">Add New Integration</h3>
+            
+            <form method="post" action="/admin/integrations/add" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="provider_type" class="block text-sm font-medium text-gray-700">Provider Type</label>
+                        <select name="provider_type" id="provider_type" required onchange="updateProviderFields()"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Select provider type</option>
+                            {% for provider_type in provider_types %}
+                            <option value="{{ provider_type }}">{{ provider_type.title() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="provider_name" class="block text-sm font-medium text-gray-700">Provider Name</label>
+                        <input type="text" name="provider_name" id="provider_name" required
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                               placeholder="e.g., my-salesforce">
+                    </div>
+                </div>
+
+                <!-- Dynamic fields based on provider type -->
+                <div id="provider-fields" class="space-y-6">
+                    <!-- Fields will be populated by JavaScript -->
+                </div>
+
+                <div>
+                    <label for="custom_config_json" class="block text-sm font-medium text-gray-700">Custom Configuration (JSON)</label>
+                    <textarea name="custom_config_json" id="custom_config_json" rows="4"
+                              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              placeholder='{"subdomain": "mycompany", "instance_url": "https://mycompany.salesforce.com"}'></textarea>
+                    <p class="mt-2 text-sm text-gray-500">Provider-specific configuration in JSON format</p>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Integration
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateProviderFields() {
+    const providerType = document.getElementById('provider_type').value;
+    const fieldsContainer = document.getElementById('provider-fields');
+    
+    const fieldConfigs = {
+        'salesforce': [
+            {name: 'api_key', label: 'Client ID', type: 'text', required: true},
+            {name: 'api_secret', label: 'Client Secret', type: 'password', required: true},
+            {name: 'username', label: 'Username', type: 'text', required: true},
+            {name: 'password', label: 'Password', type: 'password', required: true}
+        ],
+        'hubspot': [
+            {name: 'api_key', label: 'API Key', type: 'password', required: true}
+        ],
+        'zendesk': [
+            {name: 'username', label: 'Email', type: 'email', required: true},
+            {name: 'api_key', label: 'API Token', type: 'password', required: true}
+        ],
+        'shopify': [
+            {name: 'api_key', label: 'Access Token', type: 'password', required: true}
+        ],
+        'postgresql': [
+            {name: 'database_url', label: 'Database URL', type: 'text', required: true}
+        ]
+    };
+    
+    const fields = fieldConfigs[providerType] || [];
+    
+    fieldsContainer.innerHTML = '';
+    
+    if (fields.length > 0) {
+        const gridDiv = document.createElement('div');
+        gridDiv.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+        
+        fields.forEach(field => {
+            const fieldDiv = document.createElement('div');
+            fieldDiv.innerHTML = `
+                <label for="${field.name}" class="block text-sm font-medium text-gray-700">${field.label}</label>
+                <input type="${field.type}" name="${field.name}" id="${field.name}" ${field.required ? 'required' : ''}
+                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            `;
+            gridDiv.appendChild(fieldDiv);
+        });
+        
+        fieldsContainer.appendChild(gridDiv);
+    }
+}
+</script>
+{% endblock %}

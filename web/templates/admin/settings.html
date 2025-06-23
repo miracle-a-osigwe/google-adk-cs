@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Customer Service Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="/static/js/admin.js" defer></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-semibold text-gray-900">Customer Service Admin</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/admin/" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Dashboard</a>
+                        <a href="/admin/analytics" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Analytics</a>
+                        <a href="/admin/integrations" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Integrations</a>
+                        <a href="/admin/knowledge-management" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Knowledge</a>
+                        <a href="/admin/agent-performance" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Agents</a>
+                        <a href="/admin/customers" class="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium">Customers</a>
+                        <a href="/admin/settings" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Settings</a>
+                    </div>
+                </div>
+                <div class="flex items-center"><span class="text-sm text-gray-500">Admin Portal</span></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg">
+            <form action="/admin/settings/update" method="post">
+                <div class="p-6">
+                    <h1 class="text-2xl font-bold text-gray-900">System Settings</h1>
+                    <p class="mt-1 text-sm text-gray-600">Update your core business configurations.</p>
+                </div>
+                <div class="border-t border-gray-200 p-6 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900">Business Information</h3>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="business_name" class="block text-sm font-medium text-gray-700">Business Name</label>
+                                <input type="text" name="business_name" id="business_name" value="{{ business_config.business_name }}" class="mt-1 block w-full border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label for="industry" class="block text-sm font-medium text-gray-700">Industry</label>
+                                <input type="text" name="industry" id="industry" value="{{ business_config.industry }}" class="mt-1 block w-full border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-4 text-right">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

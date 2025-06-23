@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Customer Service Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-indigo-600">CustomerAI</h1>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#features" class="text-gray-500 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Features</a>
+                        <a href="#benefits" class="text-gray-500 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Benefits</a>
+                        <a href="#pricing" class="text-gray-500 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Pricing</a>
+                        <a href="#testimonials" class="text-gray-500 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Testimonials</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/customer/" class="text-indigo-600 hover:text-indigo-800 px-3 py-2 text-sm font-medium">Customer Portal</a>
+                    <a href="/admin/" class="text-indigo-600 hover:text-indigo-800 px-3 py-2 text-sm font-medium">Admin Dashboard</a>
+                    <a href="#contact" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">AI-Powered Customer Service Platform</h1>
+                    <p class="text-xl mb-8 opacity-90">Transform your customer support with our intelligent multi-agent system. Provide 24/7 assistance, reduce response times, and increase customer satisfaction.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#contact" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-gray-50">
+                            Request Demo
+                        </a>
+                        <a href="/customer/chat" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70">
+                            Try Live Chat
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-robot text-indigo-600"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium">CustomerAI Assistant</p>
+                                <div class="flex items-center">
+                                    <span class="h-2 w-2 bg-green-400 rounded-full"></span>
+                                    <p class="ml-1 text-xs">Online</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex">
+                                <div class="bg-indigo-100 text-indigo-800 p-3 rounded-lg rounded-bl-none max-w-xs">
+                                    <p class="text-sm">Hello! How can I help you today?</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <div class="bg-white text-gray-800 p-3 rounded-lg rounded-br-none max-w-xs">
+                                    <p class="text-sm">I need help setting up my account.</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="bg-indigo-100 text-indigo-800 p-3 rounded-lg rounded-bl-none max-w-xs">
+                                    <p class="text-sm">I'd be happy to help you set up your account! Here are the steps...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600">95%</p>
+                    <p class="mt-2 text-lg font-medium text-gray-600">Customer Satisfaction</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600">24/7</p>
+                    <p class="mt-2 text-lg font-medium text-gray-600">Availability</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600">60%</p>
+                    <p class="mt-2 text-lg font-medium text-gray-600">Cost Reduction</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600">2 min</p>
+                    <p class="mt-2 text-lg font-medium text-gray-600">Average Response Time</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Powerful Features</h2>
+                <p class="mt-4 text-xl text-gray-600">Our AI-powered platform offers comprehensive customer service capabilities</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all duration-300 feature-card">
+                    <div class="h-12 w-12 rounded-md bg-indigo-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-robot text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Multi-Agent System</h3>
+                    <p class="text-gray-600">Specialized AI agents work together to handle different aspects of customer support, from triage to technical troubleshooting.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all duration-300 feature-card">
+                    <div class="h-12 w-12 rounded-md bg-indigo-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-globe text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Multilingual Support</h3>
+                    <p class="text-gray-600">Communicate with customers in their preferred language with real-time translation in over 100 languages.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all duration-300 feature-card">
+                    <div class="h-12 w-12 rounded-md bg-indigo-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-microphone text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Voice Capabilities</h3>
+                    <p class="text-gray-600">Support voice interactions with speech-to-text and text-to-speech capabilities for accessible customer service.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all duration-300 feature-card">
+                    <div class="h-12 w-12 rounded-md bg-indigo-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-database text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Data Integration</h3>
+                    <p class="text-gray-600">Connect with your existing CRM, helpdesk, and e-commerce platforms for a unified customer view.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all duration-300 feature-card">
+                    <div class="h-12 w-12 rounded-md bg-indigo-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Analytics & Insights</h3>
+                    <p class="text-gray-600">Gain valuable insights from customer interactions with advanced analytics and reporting tools.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md transition-all duration-300 feature-card">
+                    <div class="h-12 w-12 rounded-md bg-indigo-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Human Collaboration</h3>
+                    <p class="text-gray-600">Seamless handoff to human agents for complex issues with complete conversation context.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div id="benefits" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Why Choose CustomerAI?</h2>
+                <p class="mt-4 text-xl text-gray-600">Transform your customer service operations with our AI-powered platform</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-clock text-indigo-600"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-medium text-gray-900">24/7 Availability</h3>
+                        </div>
+                        <p class="mt-2 ml-14 text-gray-600">Provide round-the-clock support without increasing staffing costs. Our AI agents are always available to assist your customers.</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-bolt text-indigo-600"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-medium text-gray-900">Instant Responses</h3>
+                        </div>
+                        <p class="mt-2 ml-14 text-gray-600">Eliminate wait times with immediate responses to customer inquiries, improving satisfaction and reducing abandonment.</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-chart-pie text-indigo-600"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-medium text-gray-900">Data-Driven Insights</h3>
+                        </div>
+                        <p class="mt-2 ml-14 text-gray-600">Gain valuable insights from customer interactions to improve products, services, and support processes.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-indigo-600"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-medium text-gray-900">Cost Reduction</h3>
+                        </div>
+                        <p class="mt-2 ml-14 text-gray-600">Reduce support costs by automating routine inquiries while maintaining high-quality customer service.</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-expand-arrows-alt text-indigo-600"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-medium text-gray-900">Scalability</h3>
+                        </div>
+                        <p class="mt-2 ml-14 text-gray-600">Easily scale your customer support operations to handle peak volumes without additional staffing.</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-smile text-indigo-600"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-medium text-gray-900">Improved Satisfaction</h3>
+                        </div>
+                        <p class="mt-2 ml-14 text-gray-600">Enhance customer satisfaction with quick, accurate, and personalized support experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <div id="pricing" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Simple, Transparent Pricing</h2>
+                <p class="mt-4 text-xl text-gray-600">Choose the plan that fits your business needs</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="px-6 py-8">
+                        <h3 class="text-2xl font-bold text-gray-900 text-center">Starter</h3>
+                        <div class="mt-4 flex justify-center">
+                            <span class="text-5xl font-extrabold text-gray-900">$99</span>
+                            <span class="ml-1 text-xl font-medium text-gray-500 self-end">/month</span>
+                        </div>
+                        <p class="mt-4 text-center text-gray-600">Perfect for small businesses</p>
+                    </div>
+                    <div class="px-6 pt-6 pb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Up to 1,000 conversations/month</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Basic knowledge base integration</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Email support</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Standard analytics</p>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <a href="#contact" class="block w-full text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                                Get Started
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden border-2 border-indigo-500 transform scale-105">
+                    <div class="px-6 py-8">
+                        <h3 class="text-2xl font-bold text-gray-900 text-center">Professional</h3>
+                        <div class="mt-4 flex justify-center">
+                            <span class="text-5xl font-extrabold text-gray-900">$299</span>
+                            <span class="ml-1 text-xl font-medium text-gray-500 self-end">/month</span>
+                        </div>
+                        <p class="mt-4 text-center text-gray-600">Ideal for growing businesses</p>
+                    </div>
+                    <div class="px-6 pt-6 pb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Up to 5,000 conversations/month</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Advanced knowledge integration</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Priority email & chat support</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Advanced analytics & reporting</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">CRM integration</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Multilingual support</p>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <a href="#contact" class="block w-full text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                                Get Started
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="px-6 py-8">
+                        <h3 class="text-2xl font-bold text-gray-900 text-center">Enterprise</h3>
+                        <div class="mt-4 flex justify-center">
+                            <span class="text-5xl font-extrabold text-gray-900">Custom</span>
+                        </div>
+                        <p class="mt-4 text-center text-gray-600">For large organizations</p>
+                    </div>
+                    <div class="px-6 pt-6 pb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Unlimited conversations</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Custom knowledge integration</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">24/7 priority support</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Custom analytics & reporting</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Enterprise integrations</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-base text-gray-700">Dedicated account manager</p>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <a href="#contact" class="block w-full text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                                Contact Sales
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div id="testimonials" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">What Our Customers Say</h2>
+                <p class="mt-4 text-xl text-gray-600">Trusted by businesses of all sizes</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <span class="text-xl font-bold text-indigo-600">T</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-gray-900">TechNova</h4>
+                            <p class="text-sm text-gray-600">SaaS Company</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"CustomerAI has transformed our support operations. We've reduced response times by 75% while handling 3x more inquiries. Our customers love the instant, accurate responses."</p>
+                    <div class="mt-4 flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <span class="text-xl font-bold text-indigo-600">G</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-gray-900">GlobalShop</h4>
+                            <p class="text-sm text-gray-600">E-commerce Platform</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The multilingual capabilities have allowed us to expand into new markets without hiring additional support staff. Our customer satisfaction scores have increased by 35%."</p>
+                    <div class="mt-4 flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <span class="text-xl font-bold text-indigo-600">F</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-gray-900">FinSecure</h4>
+                            <p class="text-sm text-gray-600">Financial Services</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The seamless escalation to human agents for complex issues has been a game-changer. Our support team now focuses on high-value interactions while the AI handles routine inquiries."</p>
+                    <div class="mt-4 flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Ready to Transform Your Customer Service?</h2>
+                <p class="mt-4 text-xl text-gray-600">Get in touch with our team to schedule a demo and learn how CustomerAI can help your business.</p>
+            </div>
+
+            <div class="max-w-xl mx-auto">
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input type="text" id="first_name" name="first_name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                                <input type="text" id="last_name" name="last_name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
+                            <input type="text" id="company" name="company" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Request Demo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="gradient-bg text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">Experience the Future of Customer Service</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Join the hundreds of businesses already using CustomerAI to deliver exceptional customer experiences.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/customer/" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-gray-50">
+                    Customer Portal
+                </a>
+                <a href="/admin/" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70">
+                    Admin Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">CustomerAI</h3>
+                    <p class="text-gray-400">AI-powered customer service platform for businesses of all sizes.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Integrations</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Case Studies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+                <p class="text-gray-400">&copy; 2025 CustomerAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Highlight active nav item on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('div[id]');
+            const navItems = document.querySelectorAll('nav a[href^="#"]');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 200 && window.pageYOffset < sectionTop + sectionHeight - 200) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600');
+                item.classList.add('text-gray-500');
+                
+                if (item.getAttribute('href') === `#${currentSection}`) {
+                    item.classList.remove('text-gray-500');
+                    item.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

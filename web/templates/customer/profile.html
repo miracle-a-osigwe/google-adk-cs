@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block nav_profile %}text-blue-600 border-b-2 border-blue-600{% endblock %}
+
+{% block content %}
+<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+        <!-- Profile Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8 text-white">
+            <div class="flex items-center">
+                <div class="h-24 w-24 rounded-full bg-white flex items-center justify-center text-blue-600 text-4xl font-bold">
+                    {{ user.email|first|upper }}
+                </div>
+                <div class="ml-6">
+                    <h1 class="text-2xl font-bold">{{ user.email }}</h1>
+                    <p class="text-blue-100">Member since {{ user.created_at|default('2023') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Navigation -->
+        <div class="border-b border-gray-200">
+            <nav class="flex -mb-px">
+                <button data-tab="account" class="profile-tab active whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm border-blue-500 text-blue-600">
+                    Account Information
+                </button>
+                <button data-tab="preferences" class="profile-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Preferences
+                </button>
+                <button data-tab="security" class="profile-tab whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Security
+                </button>
+            </nav>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="p-6">
+            <!-- Account Information Tab -->
+            <div id="account-tab" class="profile-tab-content">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6">Account Information</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <div class="mt-1 flex rounded-md shadow-sm">
+                            <input type="text" value="{{ user.email }}" readonly class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md border border-gray-300 bg-gray-50 text-gray-500">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="first_name" name="first_name" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="company" class="block text-sm font-medium text-gray-700">Company (Optional)</label>
+                        <input type="text" id="company" name="company" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+                        <input type="tel" id="phone" name="phone" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preferences Tab -->
+            <div id="preferences-tab" class="profile-tab-content hidden">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6">Communication Preferences</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Contact Method</label>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input id="contact-email" name="contact_method" type="radio" checked class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                <label for="contact-email" class="ml-3 block text-sm font-medium text-gray-700">Email</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="contact-phone" name="contact_method" type="radio" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                <label for="contact-phone" class="ml-3 block text-sm font-medium text-gray-700">Phone</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Notification Preferences</label>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input id="notify-updates" name="notify_updates" type="checkbox" checked class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="notify-updates" class="ml-3 block text-sm font-medium text-gray-700">Product updates and announcements</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="notify-tickets" name="notify_tickets" type="checkbox" checked class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="notify-tickets" class="ml-3 block text-sm font-medium text-gray-700">Support ticket updates</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="notify-marketing" name="notify_marketing" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="notify-marketing" class="ml-3 block text-sm font-medium text-gray-700">Marketing and promotional emails</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="language" class="block text-sm font-medium text-gray-700">Preferred Language</label>
+                        <select id="language" name="language" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                            <option selected>English</option>
+                            <option>Spanish</option>
+                            <option>French</option>
+                            <option>German</option>
+                            <option>Japanese</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Save Preferences
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security Tab -->
+            <div id="security-tab" class="profile-tab-content hidden">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6">Security Settings</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900">Change Password</h3>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <label for="current_password" class="block text-sm font-medium text-gray-700">Current Password</label>
+                                <input type="password" id="current_password" name="current_password" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="new_password" class="block text-sm font-medium text-gray-700">New Password</label>
+                                <input type="password" id="new_password" name="new_password" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                                <input type="password" id="confirm_password" name="confirm_password" class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    Update Password
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-6 border-t border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Two-Factor Authentication</h3>
+                        <div class="mt-4">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="enable_2fa" name="enable_2fa" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="enable_2fa" class="font-medium text-gray-700">Enable two-factor authentication</label>
+                                    <p class="text-gray-500">Add an extra layer of security to your account by requiring both your password and a verification code.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-6 border-t border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Session Management</h3>
+                        <p class="mt-1 text-sm text-gray-500">Manage your active sessions and sign out from other devices.</p>
+                        
+                        <div class="mt-4 border border-gray-200 rounded-md overflow-hidden">
+                            <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-laptop text-gray-400 mr-2"></i>
+                                        <span class="text-sm font-medium text-gray-700">Current Session</span>
+                                    </div>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </div>
+                                <p class="mt-1 text-xs text-gray-500">Started: Today at 10:30 AM</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex justify-end">
+                            <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Sign Out All Other Devices
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.profile-tab');
+    const tabContents = document.querySelectorAll('.profile-tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            // Update active tab
+            tabs.forEach(t => {
+                t.classList.remove('active', 'border-blue-500', 'text-blue-600');
+                t.classList.add('border-transparent', 'text-gray-500');
+            });
+            this.classList.add('active', 'border-blue-500', 'text-blue-600');
+            this.classList.remove('border-transparent', 'text-gray-500');
+            
+            // Show active tab content
+            tabContents.forEach(content => {
+                if (content.id === tabId + '-tab') {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        });
+    });
+    
+    // Fetch user profile data
+    async function fetchUserProfile() {
+        try {
+            const response = await fetch('/customer/me');
+            if (!response.ok) {
+                throw new Error('Not authenticated');
+            }
+            const userData = await response.json();
+            
+            // You could populate form fields with user data here
+            console.log('User data:', userData);
+            
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+            // Redirect to login if not authenticated
+            if (error.message === 'Not authenticated') {
+                window.location.href = '/customer/login?redirect=/customer/profile';
+            }
+        }
+    }
+    
+    fetchUserProfile();
+});
+</script>
+{% endblock %}

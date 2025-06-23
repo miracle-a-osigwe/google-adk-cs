@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance - Customer Support{% endblock %}
+
+{% block content %}
+<main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="max-w-md w-full text-center">
+        <div class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-yellow-100">
+            <i class="fas fa-tools text-yellow-600 text-4xl"></i>
+        </div>
+        <h2 class="mt-6 text-3xl font-bold text-gray-900">We'll Be Back Soon</h2>
+        <p class="mt-2 text-gray-600">Our system is currently undergoing scheduled maintenance. We apologize for any inconvenience.</p>
+        
+        <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <p class="text-sm text-yellow-800">
+                <span class="font-medium">Expected completion:</span> {{ completion_time if completion_time else "Soon" }}
+            </p>
+        </div>
+        
+        <div class="mt-8">
+            <p class="text-gray-600">
+                If you need immediate assistance, please contact us at:
+                <a href="mailto:support@example.com" class="text-blue-600 hover:text-blue-800 font-medium">
+                    support@example.com
+                </a>
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock %}

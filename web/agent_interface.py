@@ -118,6 +118,20 @@ async def agent_dashboard(request: Request, agent_id: Optional[str] = None):
     """Main agent dashboard."""
     # Get available agents
     available_agents = get_available_agents()
+    active_conversations = []
+    if not agent_id:
+        agent_id = f"agent_{uuid.uuid4().hex[:8]}"
+
+    # Agent data
+    agent_data = {
+        "id": agent_id,
+        "name": "Sarah Johnson",
+        "team": "Technical Support",
+        "status": "available",
+        "active_chats": len(active_conversations),
+        "resolved_today": 8,
+        "avg_response_time": "1.2 min"
+    }
     
     # Mock queue data
     queue_data = {
@@ -126,7 +140,7 @@ async def agent_dashboard(request: Request, agent_id: Optional[str] = None):
         "escalated": 0,
         "avg_wait_time": "0 min"
     }
-    active_conversations = []
+    
     
     return templates.TemplateResponse("dashboard.html", {
         "request": request,

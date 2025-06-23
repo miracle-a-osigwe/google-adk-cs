@@ -58,11 +58,7 @@ async def get_current_user(
     # No token found
     else:
         # This would require client-side code to send the token
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Not authenticated",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        raise RedirectToLoginException(str(request.url))
 
     try:
         # The `jwt.decode` function is where the magic happens.
